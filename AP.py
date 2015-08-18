@@ -29,6 +29,7 @@ def vp_start_gui():
     AP_support.set_Tk_var()
     w = AP_PPT (root)
     AP_support.init(root, w)
+    root.after(10,  lambda: AP_support.EventLoop())
     root.mainloop()
 
 w = None
@@ -69,6 +70,8 @@ class AP_PPT:
 
 
         self.Text1 = Text(master)
+        self.S = Scrollbar(self.Text1)
+        self.S.pack(side=RIGHT, fill=Y)
         self.Text1.place(relx=0.02, rely=0.76, relheight=0.23, relwidth=0.97)
         self.Text1.configure(background="#c0c0c0")
         self.Text1.configure(font="TkTextFont")
@@ -76,6 +79,8 @@ class AP_PPT:
         self.Text1.configure(selectbackground="#c4c4c4")
         self.Text1.configure(width=584)
         self.Text1.configure(wrap=WORD)
+        self.S.configure(command=self.Text1.yview)
+        self.Text1.configure(yscrollcommand=self.S.set)
 
         self.Label1 = Label(master)
         self.Label1.place(relx=0.02, rely=0.72, height=21, width=52)
@@ -94,6 +99,7 @@ class AP_PPT:
         self.StartTest.place(relx=0.68, rely=0.03, height=134, width=177)
         self.StartTest.configure(activebackground="#d9d9d9")
         self.StartTest.configure(pady="0")
+        self.StartTest.configure(command=AP_support.StartTest)
         self.StartTest.configure(text='''Start Test''')
 
         self.StopTest = Button(master)
@@ -101,6 +107,7 @@ class AP_PPT:
         self.StopTest.configure(activebackground="#d9d9d9")
         self.StopTest.configure(pady="0")
         self.StopTest.configure(state=ACTIVE)
+        self.StopTest.configure(command=AP_support.StopTest)
         self.StopTest.configure(text='''Stop Test''')
 
         self.PrintOption = Checkbutton(master)
